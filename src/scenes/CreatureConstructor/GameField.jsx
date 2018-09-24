@@ -1,6 +1,7 @@
 import React from 'react';
 import Matter from "matter-js";
 import Joint from "./Joint";
+import Bone from "./Bone";
 
 export default class GameField extends React.Component {
   constructor(props)
@@ -8,6 +9,7 @@ export default class GameField extends React.Component {
     super(props);
     this.state = {
       jointsList:[],
+      bonesList:[],
     };
     this.domObjectRef = React.createRef();
   }
@@ -28,9 +30,13 @@ export default class GameField extends React.Component {
     if (this.selectedJoint) this.selectedJoint = "";
   };
 
-  handleJointClick = jointIndex => () => {
-    if (this.selectedJoint) this.addBone(this.selectedJoint, this.state.jointsList[jointIndex]);
+  handleJointClick = jointIndex => event => {
+    if (this.selectedJoint) {
+      this.addBone(this.selectedJoint, this.state.jointsList[jointIndex]);
+      this.selectedJoint = '';
+    }
     else this.selectedJoint = this.state.jointsList[jointIndex]
+    event.stopPropagation();
   };
 
   addJoint = (x,y) => {
@@ -41,7 +47,7 @@ export default class GameField extends React.Component {
 
   addBone = (joint1, joint2) => {
     let newBonesList = this.state.bonesList;
-    newBonesList.push(new Bone(joint1, joint2, bonesList.length, this.engine, this.handleBoneClick));
+    newBonesList.push(new Bone(joint1, joint2, newBonesList.length, this.engine, this.handleBoneClick));
     this.setState({bonesList:newBonesList});
   };
 
@@ -69,6 +75,7 @@ export default class GameField extends React.Component {
              className="gamefield"
              onClick={this.handleGameFieldClick}>
           {this.state.jointsList.map(joint => {return joint.render()})}
+          {this.state.bonesList.map(bone => {return bone.render()})}
         </div>
       </React.Fragment>
     );

@@ -2,6 +2,10 @@ export const JOINT = {
   radius:10,
   };
 
+export const BONE = {
+  thickness:5,
+};
+
 export const GROUND = {
     width:600,
     height:60,

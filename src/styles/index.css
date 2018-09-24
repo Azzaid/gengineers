@@ -21,7 +21,10 @@ body {
 
 .joint {
   position: absolute;
-  background-color: black;
+}
+
+.bone {
+  position: absolute;
 }
 
 /*# sourceMappingURL=index.css.map */
