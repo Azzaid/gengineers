@@ -2,6 +2,7 @@ import React from 'react';
 import Matter from "matter-js";
 import Joint from "./Joint";
 import Bone from "./Bone";
+import {BONE} from "../../constants";
 
 export default class GameField extends React.Component {
   constructor(props)
@@ -16,6 +17,11 @@ export default class GameField extends React.Component {
 
   componentDidMount() {
     this.engine = Matter.Engine.create();
+    this.debugScreen = document.getElementById('debugCanvas');
+    if (this.debugScreen) {
+      this.debugScreenRenderer = Matter.Render.create({canvas:this.debugScreen, engine:this.engine});
+      Matter.Render.run(this.debugScreenRenderer);
+    }
     this.updateGamefieldPosition();
   }
 
@@ -77,6 +83,7 @@ export default class GameField extends React.Component {
           {this.state.jointsList.map(joint => {return joint.render()})}
           {this.state.bonesList.map(bone => {return bone.render()})}
         </div>
+        <canvas id="debugCanvas" style={{width:600, height:600}}/>
       </React.Fragment>
     );
   }
