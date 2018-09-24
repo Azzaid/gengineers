@@ -1,0 +1,27 @@
+body {
+  margin: 0;
+  padding: 0;
+  font-family: sans-serif;
+  width: 500px;
+  height: 500px;
+}
+
+.BIGBUTTON {
+  width: 50px;
+  height: 50px;
+  background-color: aquamarine;
+}
+
+.gamefield {
+  width: 600px;
+  height: 600px;
+  position: relative;
+  background-color: bisque;
+}
+
+.joint {
+  position: absolute;
+  background-color: black;
+}
+
+/*# sourceMappingURL=index.css.map */
