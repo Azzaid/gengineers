@@ -3,12 +3,12 @@ export const JOINT = {
   };
 
 export const BONE = {
-  thickness:5,
+  thickness:10,
 };
 
 export const CONSTRAINT = {
-  damping:1,
-  stiffness:0.1,
+  damping:0,
+  stiffness:1,
 };
 
 export const GROUND = {

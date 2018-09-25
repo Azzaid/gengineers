@@ -12,7 +12,7 @@ export default class Joint {
     this.engine = engine;
     this.handleJointClick = handleJointClick(index);
     this.matterObject = Matter.Bodies.circle(
-      this.initialX, this.initialY, JOINT.radius*2,
+      this.initialX, this.initialY, JOINT.radius,
       {
         density: 0.04,
         friction: 0.01,
@@ -22,7 +22,7 @@ export default class Joint {
     Matter.World.add(this.engine.world, [this.matterObject]);
   }
 
-  render() {
+  render(isSelected) {
     this.x = this.matterObject.position.x;
     this.y = this.matterObject.position.y;
     return (
@@ -32,8 +32,8 @@ export default class Joint {
              width:JOINT.radius*2,
              height:JOINT.radius*2,
              borderRadius:JOINT.radius,
-             left:`${this.x}px`,
-             top:`${this.y}px`,
+             borderColor:`${isSelected ? "green" : "none"}`,
+             transform:`translate(${this.x-JOINT.radius}px, ${this.y-JOINT.radius}px)`,
              background:'red'}}
            onClick={this.handleJointClick}/>
     )

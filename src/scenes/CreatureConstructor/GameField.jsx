@@ -32,8 +32,10 @@ export default class GameField extends React.Component {
   };
 
   handleGameFieldClick = (event) => {
+    if (this.selectedJoint) {
+      this.selectedJoint = "";
+    }
     this.addJoint(event.clientX - this.gamefieldCornerX, event.clientY - this.gamefieldCornerY);
-    if (this.selectedJoint) this.selectedJoint = "";
   };
 
   handleJointClick = jointIndex => event => {
@@ -41,7 +43,10 @@ export default class GameField extends React.Component {
       this.addBone(this.selectedJoint, this.state.jointsList[jointIndex]);
       this.selectedJoint = '';
     }
-    else this.selectedJoint = this.state.jointsList[jointIndex]
+    else {
+      this.selectedJoint = this.state.jointsList[jointIndex];
+      this.forceUpdate();
+    }
     event.stopPropagation();
   };
 
@@ -80,7 +85,7 @@ export default class GameField extends React.Component {
         <div ref={this.domObjectRef}
              className="gamefield"
              onClick={this.handleGameFieldClick}>
-          {this.state.jointsList.map(joint => {return joint.render()})}
+          {this.state.jointsList.map(joint => {return joint.render(joint === this.selectedJoint)})}
           {this.state.bonesList.map(bone => {return bone.render()})}
         </div>
         <canvas id="debugCanvas" style={{width:600, height:600}}/>
