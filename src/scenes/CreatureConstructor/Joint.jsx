@@ -25,6 +25,7 @@ export default class Joint {
   render(isSelected) {
     this.x = this.matterObject.position.x;
     this.y = this.matterObject.position.y;
+    console.log(this.index, isSelected);
     return (
       <div id = {`joint_${this.index}`}
            className = "joint"
@@ -32,9 +33,8 @@ export default class Joint {
              width:JOINT.radius*2,
              height:JOINT.radius*2,
              borderRadius:JOINT.radius,
-             borderColor:`${isSelected ? "green" : "none"}`,
              transform:`translate(${this.x-JOINT.radius}px, ${this.y-JOINT.radius}px)`,
-             background:'red'}}
+             background:`${isSelected ? "green" : 'red'}`}}
            onClick={this.handleJointClick}/>
     )
   }

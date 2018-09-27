@@ -32,10 +32,8 @@ export default class GameField extends React.Component {
   };
 
   handleGameFieldClick = (event) => {
-    if (this.selectedJoint) {
-      this.selectedJoint = "";
-    }
-    this.addJoint(event.clientX - this.gamefieldCornerX, event.clientY - this.gamefieldCornerY);
+    if (this.selectedJoint) this.selectedJoint = "";
+    else this.addJoint(event.clientX - this.gamefieldCornerX, event.clientY - this.gamefieldCornerY);
   };
 
   handleJointClick = jointIndex => event => {
