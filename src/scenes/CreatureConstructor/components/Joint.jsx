@@ -38,8 +38,7 @@ export default class Joint {
              width:JOINT.radius*2,
              height:JOINT.radius*2,
              borderRadius:JOINT.radius,
-             transform:`translate(${this.x-JOINT.radius}px, ${this.y-JOINT.radius}px)`,
-             background:`${isSelected ? "green" : 'red'}`}}
+             transform:`translate(${this.x-JOINT.radius}px, ${this.y-JOINT.radius}px)`}}
            onClick={this.handleJointClick}/>
     )
   }

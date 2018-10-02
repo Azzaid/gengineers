@@ -15,14 +15,19 @@ body {
 .gamefield {
   width: 600px;
   height: 600px;
+  border-radius: 10px;
+  background-color: rgba(115, 162, 239, 0.3);
   position: relative;
-  background-color: bisque;
 }
 
 .joint {
   position: absolute;
   z-index: 5;
-  border: solid 1px transparent;
+  border: solid 1px;
+  border-color: transparent;
+  background-image: url("../images/Joint.png");
+  background-position: center;
+  background-size: cover;
 }
 
 .bone {

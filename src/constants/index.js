@@ -2,7 +2,7 @@ import Muscle from "../scenes/CreatureConstructor/components/Muscle";
 
 export const JOINT = {
   radius:10,
-  friction:0.1,
+  friction:0.1
   };
 
 export const BONE = {
