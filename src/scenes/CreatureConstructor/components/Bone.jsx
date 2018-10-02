@@ -1,7 +1,7 @@
 import Matter from "matter-js";
 import React from "react";
-import { BONE, JOINT, CONSTRAINT } from "../../constants/"
-import getAngleBetweenDots from "../../scripts/getAngleBetweenDots"
+import { BONE, JOINT, CONSTRAINT } from "../../../constants/index"
+import getAngleBetweenDots from "../../../scripts/getAngleBetweenDots"
 
 export default class Bone {
   constructor(joint1, joint2, index, engine, handleBoneClick) {
@@ -30,14 +30,16 @@ export default class Bone {
       pointB:{x:(-1)*this.lenght/2*Math.cos(this.angle/57.29) + BONE.thickness/2*Math.sin(this.angle/57.29),
               y:(-1)*this.lenght/2*Math.sin(this.angle/57.29) + BONE.thickness/2*Math.cos(this.angle/57.29)},
       damping:CONSTRAINT.damping,
-      stiffness:CONSTRAINT.stiffness});
+      stiffness:CONSTRAINT.stiffness,
+      length:CONSTRAINT.lenght});
     this.constraintWithJoint2 = Matter.Constraint.create({
       bodyA:joint2.matterObject,
       bodyB:this.matterObject,
       pointB:{x:this.lenght/2*Math.cos(this.angle/57.29) + BONE.thickness/2*Math.sin(this.angle/57.29),
               y:this.lenght/2*Math.sin(this.angle/57.29) + BONE.thickness/2*Math.cos(this.angle/57.29)},
       damping:CONSTRAINT.damping,
-      stiffness:CONSTRAINT.stiffness});
+      stiffness:CONSTRAINT.stiffness,
+      length:CONSTRAINT.lenght});
     Matter.World.add(this.engine.world, [this.matterObject, this.constraintWithJoint1, this.constraintWithJoint2]);
   }
 

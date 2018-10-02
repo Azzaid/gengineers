@@ -9,11 +9,9 @@ export const BONE = {
 export const CONSTRAINT = {
   damping:0,
   stiffness:1,
+  length:0,
 };
 
 export const GROUND = {
-    width:600,
-    height:60,
-    xPos:800,
-    yPos:10
+  thickness:10,
   };

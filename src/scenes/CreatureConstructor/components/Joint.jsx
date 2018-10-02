@@ -1,6 +1,6 @@
 import Matter from "matter-js";
 import React from "react";
-import { JOINT } from "../../constants/"
+import { JOINT } from "../../../constants/index"
 
 export default class Joint {
   constructor(x, y, index, engine, handleJointClick) {
@@ -28,6 +28,7 @@ export default class Joint {
     console.log(this.index, isSelected);
     return (
       <div id = {`joint_${this.index}`}
+           key={`joint${this.index}`}
            className = "joint"
            style={{
              width:JOINT.radius*2,
