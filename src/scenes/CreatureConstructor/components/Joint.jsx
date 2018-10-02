@@ -15,11 +15,15 @@ export default class Joint {
       this.initialX, this.initialY, JOINT.radius,
       {
         density: 0.04,
-        friction: 0.01,
+        friction: JOINT.friction,
         frictionAir: 0.00001,
         restitution: 0.8,
       });
     Matter.World.add(this.engine.world, [this.matterObject]);
+  }
+  
+  reset() {
+  
   }
 
   render(isSelected) {

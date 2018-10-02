@@ -4,6 +4,7 @@ import Joint from "./components/Joint";
 import Bone from "./components/Bone";
 import {GROUND} from "../../constants";
 import getAngleBetweenDots from "../../scripts/getAngleBetweenDots";
+import Muscle from "./components/Muscle";
 
 export default class GameField extends React.Component {
   constructor(props)
@@ -12,7 +13,9 @@ export default class GameField extends React.Component {
     this.state = {};
     this.jointsList = [];
     this.bonesList = [];
+    this.musclesList = [];
     this.domObjectRef = React.createRef();
+    this.stopAnimationFlag = false;
   }
 
   componentDidMount() {
@@ -46,6 +49,7 @@ export default class GameField extends React.Component {
         const matterObject = Matter.Bodies.rectangle(centerX, centerY, length, GROUND.thickness, {
           angle:angle/57.29,
           isStatic:true,
+          friction:GROUND.friction,
         });
         
         Matter.World.add(this.engine.world, [matterObject]);
@@ -60,7 +64,9 @@ export default class GameField extends React.Component {
 
   handleGameFieldClick = (event) => {
     if (this.selectedJoint) this.selectedJoint = "";
+    else if (this.selectedBone) this.selectedBone = "";
     else this.addJoint(event.clientX - this.gamefieldCornerX, event.clientY - this.gamefieldCornerY);
+    this.forceUpdate();
   };
 
   handleJointClick = jointIndex => event => {
@@ -70,6 +76,18 @@ export default class GameField extends React.Component {
     }
     else {
       this.selectedJoint = this.jointsList[jointIndex];
+      this.forceUpdate();
+    }
+    event.stopPropagation();
+  };
+  
+  handleBoneClick = boneIndex => event => {
+    if (this.selectedBone) {
+      this.addMuscle(this.selectedBone, this.bonesList[boneIndex]);
+      this.selectedBone = '';
+    }
+    else {
+      this.selectedBone = this.bonesList[boneIndex];
       this.forceUpdate();
     }
     event.stopPropagation();
@@ -84,32 +102,48 @@ export default class GameField extends React.Component {
     this.bonesList.push(new Bone(joint1, joint2, this.bonesList.length, this.engine, this.handleBoneClick));
     this.forceUpdate();
   };
+  
+  addMuscle = (bone1, bone2) => {
+    this.musclesList.push(new Muscle(bone1, bone2, this.musclesList.length, this.handleMuscleClick));
+    this.forceUpdate();
+  };
 
-  stepSimulation = (time) => {
-    const stepTime = isFinite(time) ? time : 200;
+  startSimulation = time => {
+    const stepTime = isFinite(time) ? time : false;
     const startTime = new Date().getTime();
     this.renderStep(startTime, startTime, stepTime)
+  };
+  
+  stopSimulation = () => {
+    this.stopAnimationFlag = true;
   };
 
   renderStep = (animationStartTime, previousCallTime, targetAnimationLength) => {
     const currentTime = new Date().getTime();
     Matter.Engine.update(this.engine, previousCallTime-currentTime, 1);
     this.forceUpdate();
-    if (targetAnimationLength && currentTime - animationStartTime < targetAnimationLength) window.requestAnimationFrame(()=>{
-      this.renderStep(animationStartTime, currentTime, targetAnimationLength)
-    })
+    if (!this.stopAnimationFlag) {
+      if (!targetAnimationLength || currentTime - animationStartTime < targetAnimationLength) window.requestAnimationFrame(()=>{
+        this.renderStep(animationStartTime, currentTime, targetAnimationLength)
+      })
+    } else {
+      this.stopAnimationFlag = false;
+    }
   };
 
   render()
   {
     return (
       <React.Fragment>
-        <div className="BIGBUTTON" onClick={this.stepSimulation}/>
+        <div className="BIGBUTTON" onClick={() => {this.startSimulation(200)}}>step</div>
+        <div className="BIGBUTTON" onClick={this.startSimulation}>start</div>
+        <div className="BIGBUTTON" onClick={this.stopSimulation}>stop</div>
         <div ref={this.domObjectRef}
              className="gamefield"
              onClick={this.handleGameFieldClick}>
           {this.jointsList.map(joint => {return joint.render(joint === this.selectedJoint)})}
-          {this.bonesList.map(bone => {return bone.render()})}
+          {this.bonesList.map(bone => {return bone.render(bone === this.selectedBone)})}
+          {this.musclesList.map(muscle => {return muscle.render()})}
         </div>
         <canvas id="debugCanvas" style={{width:600, height:600}}/>
       </React.Fragment>
