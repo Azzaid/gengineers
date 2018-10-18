@@ -1,22 +1,30 @@
 import Muscle from "../scenes/CreatureConstructor/components/Muscle";
 
+//collision bits order: bone, joints, ground
+
 export const JOINT = {
-  radius:10,
-  friction:0.1
+  radius:40,
+  visualRadius:40,
+  friction:0.1,
+  collisionBitset:0x0010,
+  collisionBitmask:0x0001,
   };
 
 export const BONE = {
-  thickness:10,
+  thickness:40,
+  collisionBitset:0x0100,
+  collisionBitmask:0x0001,
 };
 
 export const MUSCLE = {
   thickness:10,
+  //currently has no physic body
   };
 
 export const CONSTRAINT = {
   damping:0.1,
-  stiffness:1,
-  length:1,
+  stiffness:0.9,
+  length:0,
 };
 
 export const GROUND = {

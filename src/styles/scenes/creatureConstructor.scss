@@ -1,6 +1,9 @@
 .BIGBUTTON {
   width: 50px;
-  height: 50px;
+  height: 150px;
+  transform: skewX(15deg);
+  border: solid 2px blue;
+  border-radius: 10px;
   background-color: aquamarine;
 }
 
@@ -24,4 +27,36 @@
 
 .bone {
   position: absolute;
+  background-image: url("../images/bone.jpg");
+  background-position: center;
+  background-size: contain;
+  background-repeat: repeat-x;
+}
+
+.actuator {
+  width: 30px;
+  height: 30px;
+  transform-origin: top left;
+  position: absolute;
+  transition: 0.5s;
+  transition-timing-function: linear;
+  background-image: url("../images/middle_actuator.png");
+  background-repeat: repeat-x;
+  background-position: 0 50%;
+  background-size: 60px;
+  text-align: center;
+  overflow: visible;
+}
+
+.actuator:before {
+  content: "";
+  display: block;
+  width: 95px;
+  height: 60px;
+  position: relative;
+  top: -22px;
+  background-image: url("../images/start_actuator.png");
+  background-position:  0 65%;
+  background-size: 95px;
+  background-repeat: no-repeat;
 }

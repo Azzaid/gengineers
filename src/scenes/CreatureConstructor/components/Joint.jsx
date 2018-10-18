@@ -18,6 +18,10 @@ export default class Joint {
         friction: JOINT.friction,
         frictionAir: 0.00001,
         restitution: 0.8,
+        collisionFilter:{
+          group:JOINT.collisionBitset,
+          mask:JOINT.collisionBitmask
+        }
       });
     Matter.World.add(this.engine.world, [this.matterObject]);
   }
@@ -35,10 +39,10 @@ export default class Joint {
            key={`joint${this.index}`}
            className = "joint"
            style={{
-             width:JOINT.radius*2,
-             height:JOINT.radius*2,
-             borderRadius:JOINT.radius,
-             transform:`translate(${this.x-JOINT.radius}px, ${this.y-JOINT.radius}px)`}}
+             width:JOINT.visualRadius*2,
+             height:JOINT.visualRadius*2,
+             borderRadius:JOINT.visualRadius,
+             transform:`translate(${this.x-JOINT.visualRadius}px, ${this.y-JOINT.visualRadius}px)`}}
            onClick={this.handleJointClick}/>
     )
   }

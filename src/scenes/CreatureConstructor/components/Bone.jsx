@@ -31,6 +31,8 @@ export default class Bone {
     this.constraintWithJoint1 = Matter.Constraint.create({
       bodyA:joint1.matterObject,
       bodyB:this.matterObject,
+      pointA:{x:JOINT.radius*Math.cos(angle/57.29),
+              y:JOINT.radius*Math.sin(angle/57.29)},
       pointB:{x:(-1)*this.lenght/2*Math.cos(angle/57.29) + BONE.thickness/2*Math.sin(angle/57.29),
               y:(-1)*this.lenght/2*Math.sin(angle/57.29) + BONE.thickness/2*Math.cos(angle/57.29)},
       damping:CONSTRAINT.damping,
@@ -39,6 +41,8 @@ export default class Bone {
     this.constraintWithJoint2 = Matter.Constraint.create({
       bodyA:joint2.matterObject,
       bodyB:this.matterObject,
+      pointA:{x:(-1)*JOINT.radius*Math.cos(angle/57.29),
+              y:JOINT.radius*Math.sin(angle/57.29)},
       pointB:{x:this.lenght/2*Math.cos(angle/57.29) + BONE.thickness/2*Math.sin(angle/57.29),
               y:this.lenght/2*Math.sin(angle/57.29) + BONE.thickness/2*Math.cos(angle/57.29)},
       damping:CONSTRAINT.damping,
