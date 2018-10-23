@@ -11,7 +11,7 @@ export default class Bone {
     this.engine = engine;
     this.handleBoneClick = handleBoneClick(index);
     
-    this.lenght = Math.sqrt(Math.pow((this.joint1.y-this.joint2.y) ,2) + Math.pow((this.joint1.x-this.joint2.x),2));
+    this.bodyLenght = Math.sqrt(Math.pow((this.joint1.y-this.joint2.y) ,2) + Math.pow((this.joint1.x-this.joint2.x),2)) - JOINT.bodyRadius*2;
     const angle = getAngleBetweenDots([this.joint1.x,this.joint1.y],[this.joint2.x,this.joint2.y]);
   
     this.x = Math.min(this.joint1.x, this.joint2.x)+ Math.abs(this.joint1.x - this.joint2.x)/2;
@@ -21,7 +21,7 @@ export default class Bone {
     this.initialY = this.y;
     this.initialAngle = angle;
     
-    this.matterObject = Matter.Bodies.rectangle(this.x, this.y, this.lenght, BONE.thickness, {
+    this.matterObject = Matter.Bodies.rectangle(this.x, this.y, this.bodyLenght, BONE.thickness, {
       angle:angle/57.29,
       density: 0.04,
       friction: 0.01,
@@ -31,20 +31,20 @@ export default class Bone {
     this.constraintWithJoint1 = Matter.Constraint.create({
       bodyA:joint1.matterObject,
       bodyB:this.matterObject,
-      pointA:{x:JOINT.radius*Math.cos(angle/57.29),
-              y:JOINT.radius*Math.sin(angle/57.29)},
-      pointB:{x:(-1)*this.lenght/2*Math.cos(angle/57.29) + BONE.thickness/2*Math.sin(angle/57.29),
-              y:(-1)*this.lenght/2*Math.sin(angle/57.29) + BONE.thickness/2*Math.cos(angle/57.29)},
+      //pointA:{x:JOINT.bodyRadius*Math.cos(angle/57.29),
+      //        y:JOINT.bodyRadius*Math.sin(angle/57.29)},
+      pointB:{x:(-1)*this.bodyLenght/2*Math.cos(angle/57.29) + BONE.thickness/2*Math.sin(angle/57.29),
+              y:(-1)*this.bodyLenght/2*Math.sin(angle/57.29) + BONE.thickness/2*Math.cos(angle/57.29)},
       damping:CONSTRAINT.damping,
       stiffness:CONSTRAINT.stiffness,
       length:CONSTRAINT.lenght});
     this.constraintWithJoint2 = Matter.Constraint.create({
       bodyA:joint2.matterObject,
       bodyB:this.matterObject,
-      pointA:{x:(-1)*JOINT.radius*Math.cos(angle/57.29),
-              y:JOINT.radius*Math.sin(angle/57.29)},
-      pointB:{x:this.lenght/2*Math.cos(angle/57.29) + BONE.thickness/2*Math.sin(angle/57.29),
-              y:this.lenght/2*Math.sin(angle/57.29) + BONE.thickness/2*Math.cos(angle/57.29)},
+      pointA:{x:(-1)*JOINT.bodyRadius*Math.cos(angle/57.29),
+              y:JOINT.bodyRadius*Math.sin(angle/57.29)},
+      pointB:{x:this.bodyLenght/2*Math.cos(angle/57.29) + BONE.thickness/2*Math.sin(angle/57.29),
+              y:this.bodyLenght/2*Math.sin(angle/57.29) + BONE.thickness/2*Math.cos(angle/57.29)},
       damping:CONSTRAINT.damping,
       stiffness:CONSTRAINT.stiffness,
       length:CONSTRAINT.lenght});
@@ -59,9 +59,9 @@ export default class Bone {
       <div id = {`bone_${this.index}`}
            className = "bone"
            style={{
-             width:this.lenght,
+             width:this.bodyLenght+BONE.visualJointOverlap*2,
              height:BONE.thickness,
-             transform:`translate(${this.x-this.lenght/2}px, ${this.y-BONE.thickness/2}px) rotate(${angle}deg)`,
+             transform:`translate(${this.x-this.bodyLenght/2-BONE.visualJointOverlap}px, ${this.y-BONE.thickness/2}px) rotate(${angle}deg)`,
              background:`${isSelected ? 'green' : 'blue'}`}}
            onClick={this.handleBoneClick}/>
     )

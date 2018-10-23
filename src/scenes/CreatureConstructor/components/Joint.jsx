@@ -12,7 +12,7 @@ export default class Joint {
     this.engine = engine;
     this.handleJointClick = handleJointClick(index);
     this.matterObject = Matter.Bodies.circle(
-      this.initialX, this.initialY, JOINT.radius,
+      this.initialX, this.initialY, JOINT.bodyRadius,
       {
         density: 0.04,
         friction: JOINT.friction,
