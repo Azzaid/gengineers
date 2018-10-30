@@ -31,23 +31,19 @@ export default class Bone {
     this.constraintWithJoint1 = Matter.Constraint.create({
       bodyA:joint1.matterObject,
       bodyB:this.matterObject,
-      //pointA:{x:JOINT.bodyRadius*Math.cos(angle/57.29),
-      //        y:JOINT.bodyRadius*Math.sin(angle/57.29)},
-      pointB:{x:(-1)*this.bodyLenght/2*Math.cos(angle/57.29) + BONE.thickness/2*Math.sin(angle/57.29),
-              y:(-1)*this.bodyLenght/2*Math.sin(angle/57.29) + BONE.thickness/2*Math.cos(angle/57.29)},
+      pointA:{x:JOINT.bodyRadius*Math.cos(angle/57.29),
+              y:JOINT.bodyRadius*Math.sin(angle/57.29)},
+      pointB:{x:(-1)*this.bodyLenght/2*Math.cos(angle/57.29) + BONE.thickness/2*Math.sin(angle/57.29)},
       damping:CONSTRAINT.damping,
-      stiffness:CONSTRAINT.stiffness,
-      length:CONSTRAINT.lenght});
+      stiffness:CONSTRAINT.stiffness});
     this.constraintWithJoint2 = Matter.Constraint.create({
       bodyA:joint2.matterObject,
       bodyB:this.matterObject,
       pointA:{x:(-1)*JOINT.bodyRadius*Math.cos(angle/57.29),
-              y:JOINT.bodyRadius*Math.sin(angle/57.29)},
-      pointB:{x:this.bodyLenght/2*Math.cos(angle/57.29) + BONE.thickness/2*Math.sin(angle/57.29),
-              y:this.bodyLenght/2*Math.sin(angle/57.29) + BONE.thickness/2*Math.cos(angle/57.29)},
+              y:(-1)*JOINT.bodyRadius*Math.sin(angle/57.29)},
+      pointB:{x:this.bodyLenght/2*Math.cos(angle/57.29) + BONE.thickness/2*Math.sin(angle/57.29)},
       damping:CONSTRAINT.damping,
-      stiffness:CONSTRAINT.stiffness,
-      length:CONSTRAINT.lenght});
+      stiffness:CONSTRAINT.stiffness});
     Matter.World.add(this.engine.world, [this.matterObject, this.constraintWithJoint1, this.constraintWithJoint2]);
   }
 

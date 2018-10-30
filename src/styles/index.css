@@ -6,9 +6,16 @@ body {
   height: 500px;
 }
 
-.BIGBUTTON {
+.button-holder {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.button-holder .simulation-control-button {
   width: 50px;
   height: 150px;
+  margin: 5px;
   transform: skewX(15deg);
   border: solid 2px blue;
   border-radius: 10px;

@@ -63,6 +63,7 @@ export default class GameField extends React.Component {
   };
 
   handleGameFieldClick = (event) => {
+    console.log('gamefield');
     if (this.selectedJoint) this.selectedJoint = "";
     else if (this.selectedBone) this.selectedBone = "";
     else this.addJoint(event.clientX - this.gamefieldCornerX, event.clientY - this.gamefieldCornerY);
@@ -70,6 +71,7 @@ export default class GameField extends React.Component {
   };
 
   handleJointClick = jointIndex => event => {
+    console.log('joint');
     if (this.selectedJoint) {
       this.addBone(this.selectedJoint, this.jointsList[jointIndex]);
       this.selectedJoint = '';
@@ -82,6 +84,7 @@ export default class GameField extends React.Component {
   };
   
   handleBoneClick = boneIndex => event => {
+    console.log('bone');
     if (this.selectedBone) {
       this.addMuscle(this.selectedBone, this.bonesList[boneIndex]);
       this.selectedBone = '';
@@ -109,12 +112,14 @@ export default class GameField extends React.Component {
   };
 
   startSimulation = time => {
+    console.log('start');
     const stepTime = isFinite(time) ? time : false;
     const startTime = new Date().getTime();
     this.renderStep(startTime, startTime, stepTime)
   };
   
   stopSimulation = () => {
+    console.log('stop');
     this.stopAnimationFlag = true;
   };
 
@@ -135,9 +140,11 @@ export default class GameField extends React.Component {
   {
     return (
       <React.Fragment>
-        <div className="BIGBUTTON" onClick={() => {this.startSimulation(200)}}>step</div>
-        <div className="BIGBUTTON" onClick={this.startSimulation}>start</div>
-        <div className="BIGBUTTON" onClick={this.stopSimulation}>stop</div>
+        <div className="button-holder">
+        <div className="simulation-control-button" onClick={() => {this.startSimulation(200)}}>step</div>
+        <div className="simulation-control-button" onClick={this.startSimulation}>start</div>
+        <div className="simulation-control-button" onClick={this.stopSimulation}>stop</div>
+        </div>
         <div ref={this.domObjectRef}
              className="gamefield"
              onClick={this.handleGameFieldClick}>
