@@ -2,11 +2,18 @@
   "name": "gengineers",
   "version": "0.1.0",
   "private": true,
+  "description": "Genetic is fun, engineering is cool",
+  "homepage": "",
+  "repository": "https://github.com/Azzaid/gengineers",
+  "author": {
+    "name": "Azzaid",
+    "url": "https://github.com/Azzaid"
+  },
   "dependencies": {
     "matter-js": "^0.14.2",
     "react": "^16.4.2",
     "react-dom": "^16.4.2",
-    "react-scripts": "1.1.5",
+    "react-scripts": "^2.1.1",
     "sass": "^1.13.1"
   },
   "scripts": {
